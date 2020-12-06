@@ -1,10 +1,15 @@
 import Vue from "vue";
 import App from "./App.vue";
-import Vuesax from "vuesax";
-import "vuesax/dist/vuesax.css";
+import router from "./routes";
+import store from "./store";
+import BootstrapVue from "bootstrap-vue/dist/bootstrap-vue.esm";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
 
 Vue.config.productionTip = false;
 
-Vue.use(Vuesax);
+Vue.use(BootstrapVue);
 
-new Vue({ render: (h) => h(App) }).$mount("#app");
+Vue.component("pagination", require("laravel-vue-pagination"));
+
+new Vue({ render: h => h(App), router, store }).$mount("#app");

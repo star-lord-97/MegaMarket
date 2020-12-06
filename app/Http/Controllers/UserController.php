@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return User::with(['orders'])->paginate(10);
+        return User::with(['orders'])->latest()->paginate(10);
     }
 
-    public function show(User $user)
+    public function show(Request $request)
     {
-        return $user;
+        return auth()->guard('api')->user();
     }
 }

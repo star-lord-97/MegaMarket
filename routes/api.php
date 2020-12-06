@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // login a user and return an access token or an error message
-Route::post('/login', LoginController::class);
+Route::post('/login', [LoginController::class, 'login']);
 
 // submit a new user to the database and return 200 status code or an error message
 Route::post('/register', RegisterController::class);
@@ -33,11 +33,14 @@ Route::get('products', [ProductController::class, 'index']);
 Route::get('/products/{product:id}', [ProductController::class, 'show']);
 
 Route::middleware('auth:api')->group(function () {
+    // logout a user and return nothing
+    Route::post('/logout', [LoginController::class, 'logout']);
+
     // return all the users in the database paginated by 10s (-----ADMIN-----)
     Route::get('/users', [UserController::class, 'index']);
 
     // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
-    Route::get('/users/{user:id}', [UserController::class, 'show']);
+    Route::get('/user', [UserController::class, 'show']);
 
     // return a specific user's orders (-----ADMIN----- || -----AUTHENTICATED USER-----)
     Route::get('/users/{user:id}/orders', UserOrdersController::class);

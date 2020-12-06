@@ -8,6 +8,6 @@ class UserOrdersController extends Controller
 {
     public function __invoke(User $user)
     {
-        return $user->orders()->with(['product'])->paginate(10);
+        return $user->orders()->with(['product'])->latest()->paginate(6);
     }
 }

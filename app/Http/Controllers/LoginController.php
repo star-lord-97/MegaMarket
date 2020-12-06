@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function __invoke(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -20,10 +20,15 @@ class LoginController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect']
+                'credentials' => ['The provided credentials are incorrect']
             ]);
         };
 
         return $user->createToken('bigStore')->accessToken;
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
     }
 }
