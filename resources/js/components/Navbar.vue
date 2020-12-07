@@ -41,13 +41,35 @@
                     class="px-3 py-2 rounded-md text-l font-medium text-gray-300 hover:text-white hover:bg-gray-700"
                     >Dashboard</router-link
                 >
-                <a
-                    v-if="isLoggedIn"
-                    @click.prevent="logout"
-                    href="#"
-                    class="px-3 py-2 rounded-md text-l font-medium text-gray-300 hover:text-white hover:bg-gray-700"
-                    >Logout</a
-                >
+                <div>
+                    <b-dropdown
+                        id="dropdown-1"
+                        v-if="user"
+                        :text="user.name"
+                        class="m-md-2"
+                    >
+                        <b-dropdown-item>
+                            <router-link
+                                v-if="user"
+                                :to="{
+                                    path: '/edit_profile?profile_id=' + user.id
+                                }"
+                                class="text-gray-900 hover:text-gray-900 hover:no-underline"
+                            >
+                                Edit profile
+                            </router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <a
+                                v-if="isLoggedIn && user"
+                                @click.prevent="logout"
+                                href="#"
+                                class="text-gray-900 hover:text-gray-900 hover:no-underline"
+                                >Logout</a
+                            >
+                        </b-dropdown-item>
+                    </b-dropdown>
+                </div>
             </div>
         </nav>
     </div>
@@ -55,13 +77,17 @@
 
 <script>
 import User from "../apis/User";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
     computed: {
         ...mapGetters(["isLoggedIn"]),
 
         ...mapGetters(["isAdmin"]),
+
+        ...mapState({
+            user: state => state.auth.user
+        }),
 
         showAdmin() {
             return this.isLoggedIn && this.isAdmin;
@@ -80,7 +106,7 @@ export default {
                 this.$store.commit("LOGIN", false);
                 this.$store.commit("ADMIN", false);
                 this.$store.commit("AUTH_USER", null);
-                this.$router.push("/");
+                this.$router.push("/").catch(() => {});
             });
         }
     }

@@ -8,6 +8,7 @@ import Dashboard from "./views/Dashboard";
 import Admin from "./views/Admin";
 import Checkout from "./views/Checkout";
 import EditOrder from "./views/EditOrder";
+import EditProfile from "./views/EditProfile";
 import Confirmation from "./views/Confirmation";
 
 Vue.use(VueRouter);
@@ -45,14 +46,15 @@ const routes = [
         }
     },
 
-    // {
-    //     path: "/admin/:page",
-    //     component: Admin,
-    //     meta: {
-    //         requiresAuth: true,
-    //         requiresAdmin: true
-    //     }
-    // },
+    {
+        path: "/admin/:page",
+        component: Admin,
+        name: "admin_pages",
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true
+        }
+    },
 
     {
         path: "/admin",
@@ -80,6 +82,15 @@ const routes = [
         meta: {
             requiresAuth: true,
             requiresUser: true
+        }
+    },
+
+    {
+        path: "/edit_profile",
+        component: EditProfile,
+        props: route => ({ user_id: route.query.profile_id }),
+        meta: {
+            requiresAuth: true
         }
     },
 
