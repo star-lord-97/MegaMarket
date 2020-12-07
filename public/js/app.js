@@ -2219,15 +2219,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       orders: null,
-      orders_pagination: null,
-      componentKey: 0
+      orders_pagination: null
     };
   },
   mounted: function mounted() {
@@ -2245,9 +2242,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     deliver: function deliver(order_id) {
       Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().patch("/orders/".concat(order_id, "/deliver")).then(this.$emit("delivered"));
-    },
-    handleDelivered: function handleDelivered() {
-      this.componentKey += 1;
     }
   }
 });
@@ -42360,14 +42354,10 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            key: _vm.componentKey,
                             staticClass: "btn btn-success",
                             on: {
                               click: function($event) {
                                 return _vm.deliver(order.id)
-                              },
-                              delivered: function($event) {
-                                return _vm.handleDelivered()
                               }
                             }
                           },

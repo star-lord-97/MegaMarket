@@ -30,10 +30,8 @@
                     </td>
                     <td v-if="order.is_delivered == 0">
                         <button
-                            :key="componentKey"
                             class="btn btn-success"
                             @click="deliver(order.id)"
-                            @delivered="handleDelivered()"
                         >
                             Deliver
                         </button>
@@ -62,8 +60,7 @@ export default {
     data() {
         return {
             orders: null,
-            orders_pagination: null,
-            componentKey: 0
+            orders_pagination: null
         };
     },
 
@@ -85,10 +82,6 @@ export default {
             axiosInstanceWithToken()
                 .patch(`/orders/${order_id}/deliver`)
                 .then(this.$emit("delivered"));
-        },
-
-        handleDelivered() {
-            this.componentKey += 1;
         }
     }
 };
