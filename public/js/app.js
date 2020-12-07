@@ -2240,8 +2240,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.orders_pagination = response.data;
       });
     },
-    deliver: function deliver(order_id) {
-      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().patch("/orders/".concat(order_id, "/deliver")).then(this.$emit("delivered"));
+    deliver: function deliver(order_id, index) {
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().patch("/orders/".concat(order_id, "/deliver")).then(this.orders[--index].is_delivered = 1);
     }
   }
 });
@@ -42357,7 +42357,7 @@ var render = function() {
                             staticClass: "btn btn-success",
                             on: {
                               click: function($event) {
-                                return _vm.deliver(order.id)
+                                return _vm.deliver(order.id, index)
                               }
                             }
                           },

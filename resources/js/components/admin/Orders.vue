@@ -31,7 +31,7 @@
                     <td v-if="order.is_delivered == 0">
                         <button
                             class="btn btn-success"
-                            @click="deliver(order.id)"
+                            @click="deliver(order.id, index)"
                         >
                             Deliver
                         </button>
@@ -78,10 +78,10 @@ export default {
                 });
         },
 
-        deliver(order_id) {
+        deliver(order_id, index) {
             axiosInstanceWithToken()
                 .patch(`/orders/${order_id}/deliver`)
-                .then(this.$emit("delivered"));
+                .then((this.orders[--index].is_delivered = 1));
         }
     }
 };
