@@ -9,6 +9,7 @@ import Admin from "./views/Admin";
 import Checkout from "./views/Checkout";
 import EditOrder from "./views/EditOrder";
 import EditProfile from "./views/EditProfile";
+import EditProduct from "./components/admin/EditProduct";
 import Confirmation from "./views/Confirmation";
 
 Vue.use(VueRouter);
@@ -50,6 +51,16 @@ const routes = [
         path: "/admin/:page",
         component: Admin,
         name: "admin_pages",
+        meta: {
+            requiresAuth: true,
+            requiresAdmin: true
+        }
+    },
+
+    {
+        path: "/edit_product",
+        component: EditProduct,
+        props: route => ({ product_id: route.query.product_id }),
         meta: {
             requiresAuth: true,
             requiresAdmin: true

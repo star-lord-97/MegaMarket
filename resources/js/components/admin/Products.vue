@@ -36,7 +36,7 @@
                     <td>{{ product.units }}</td>
                     <td>{{ product.price }}</td>
                     <td>
-                        {{ product.discreption.slice(0, 40) }}
+                        {{ product.discreption.slice(0, 30) }}
                         <router-link
                             :to="{ path: '/products/' + product.id }"
                             class="text-black hover:text-black hover:underline"
@@ -45,9 +45,14 @@
                         </router-link>
                     </td>
                     <td>
-                        <button class="btn btn-success mb-2 w-24">
+                        <router-link
+                            :to="{
+                                path: '/edit_product?product_id=' + product.id
+                            }"
+                            class="btn btn-success mb-2 w-24"
+                        >
                             Edit
-                        </button>
+                        </router-link>
                         <button
                             class="btn btn-danger w-24"
                             @click="deleteProduct(product.id, index)"
