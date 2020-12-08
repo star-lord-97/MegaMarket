@@ -9,6 +9,7 @@
                     <td>Units</td>
                     <td>Price</td>
                     <td>Description</td>
+                    <td>Edit/Delete</td>
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +19,13 @@
                     :key="product.id"
                 >
                     <td>{{ ++index }}</td>
-                    <td>{{ product.name }}</td>
+                    <td>
+                        <router-link
+                            :to="{ path: '/products/' + product.id }"
+                            class="text-black hover:text-black hover:no-underline"
+                            >{{ product.name }}</router-link
+                        >
+                    </td>
                     <td>
                         <img
                             :src="product.image"
@@ -28,10 +35,32 @@
                     </td>
                     <td>{{ product.units }}</td>
                     <td>{{ product.price }}</td>
-                    <td>{{ product.discreption }}</td>
+                    <td>
+                        {{ product.discreption.slice(0, 40) }}
+                        <router-link
+                            :to="{ path: '/products/' + product.id }"
+                            class="text-black hover:text-black hover:underline"
+                        >
+                            ...
+                        </router-link>
+                    </td>
+                    <td>
+                        <button class="btn btn-success mb-2 w-24">
+                            Edit
+                        </button>
+                        <button
+                            class="btn btn-danger w-24"
+                            @click="deleteProduct(product.id, index)"
+                        >
+                            Delete
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <h1 v-if="products && products.length <= 0" class="text-xl">
+            No products to show yet :"[
+        </h1>
         <pagination
             v-if="products_pagination"
             :data="this.products_pagination"
@@ -48,7 +77,8 @@ export default {
     data() {
         return {
             products: null,
-            products_pagination: null
+            products_pagination: null,
+            current_page: 0
         };
     },
 
@@ -63,7 +93,14 @@ export default {
                 .then(response => {
                     this.products = response.data.data;
                     this.products_pagination = response.data;
+                    this.current_page = page;
                 });
+        },
+
+        deleteProduct(product_id, index) {
+            axiosInstanceWithToken()
+                .delete(`/products/${product_id}`)
+                .then(this.getResults(this.current_page));
         }
     }
 };

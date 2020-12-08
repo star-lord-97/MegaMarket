@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-.router-link-exact-active {
+.router-link-exact-active.rounded-md {
     --tw-text-opacity: 1;
     color: rgba(255, 255, 255, var(--tw-text-opacity));
     --tw-bg-opacity: 1;

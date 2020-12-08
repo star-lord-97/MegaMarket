@@ -20,6 +20,9 @@
                 </tr>
             </tbody>
         </table>
+        <h1 v-if="users && users.length <= 0" class="text-xl">
+            No users to show yet :"[
+        </h1>
         <pagination
             v-if="users_pagination"
             :data="this.users_pagination"

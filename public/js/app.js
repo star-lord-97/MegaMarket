@@ -2248,12 +2248,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2275,38 +2269,6 @@ __webpack_require__.r(__webpack_exports__);
     Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get("/orders").then(function (response) {
       return _this.ordersCount = response.data.total;
     });
-  },
-  methods: {
-    setComponent: function setComponent(componentName) {
-      switch (componentName) {
-        case "users":
-          this.$router.push({
-            name: "admin_pages",
-            params: {
-              page: "users"
-            }
-          })["catch"](function () {});
-          break;
-
-        case "orders":
-          this.$router.push({
-            name: "admin_pages",
-            params: {
-              page: "orders"
-            }
-          })["catch"](function () {});
-          break;
-
-        case "products":
-          this.$router.push({
-            name: "admin_pages",
-            params: {
-              page: "products"
-            }
-          })["catch"](function () {});
-          break;
-      }
-    }
   }
 });
 
@@ -2377,12 +2339,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       orders: null,
-      orders_pagination: null
+      orders_pagination: null,
+      current_page: 0
     };
   },
   mounted: function mounted() {
@@ -2396,10 +2362,11 @@ __webpack_require__.r(__webpack_exports__);
       Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get("/orders?page=" + page).then(function (response) {
         _this.orders = response.data.data;
         _this.orders_pagination = response.data;
+        _this.current_page = page;
       });
     },
     deliver: function deliver(order_id, index) {
-      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().patch("/orders/".concat(order_id, "/deliver")).then(this.orders[--index].is_delivered = 1);
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().patch("/orders/".concat(order_id, "/deliver")).then(this.getResults(this.current_page));
     }
   }
 });
@@ -2459,12 +2426,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       products: null,
-      products_pagination: null
+      products_pagination: null,
+      current_page: 0
     };
   },
   mounted: function mounted() {
@@ -2478,7 +2475,11 @@ __webpack_require__.r(__webpack_exports__);
       Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get("/products?page=" + page).then(function (response) {
         _this.products = response.data.data;
         _this.products_pagination = response.data;
+        _this.current_page = page;
       });
+    },
+    deleteProduct: function deleteProduct(product_id, index) {
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])()["delete"]("/products/".concat(product_id)).then(this.getResults(this.current_page));
     }
   }
 });
@@ -2495,6 +2496,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apis_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../apis/Api */ "./resources/js/apis/Api.js");
+//
+//
+//
 //
 //
 //
@@ -36983,7 +36987,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".router-link-exact-active[data-v-6dde423b] {\n  --tw-text-opacity: 1;\n  color: rgba(255, 255, 255, var(--tw-text-opacity));\n  --tw-bg-opacity: 1;\n  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));\n}\r\n", ""]);
+exports.push([module.i, ".router-link-exact-active.rounded-md[data-v-6dde423b] {\n  --tw-text-opacity: 1;\n  color: rgba(255, 255, 255, var(--tw-text-opacity));\n  --tw-bg-opacity: 1;\n  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));\n}\r\n", ""]);
 
 // exports
 
@@ -42743,23 +42747,7 @@ var render = function() {
         staticClass:
           "col-md-4 product-box d-flex align-content-center justify-content-center flex-wrap big-text"
       },
-      [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.setComponent("orders")
-              }
-            }
-          },
-          [
-            _vm._v(
-              "\n            Orders (" + _vm._s(_vm.ordersCount) + ")\n        "
-            )
-          ]
-        )
-      ]
+      [_c("button", [_vm._v("Orders (" + _vm._s(_vm.ordersCount) + ")")])]
     ),
     _vm._v(" "),
     _c("hr"),
@@ -42770,25 +42758,7 @@ var render = function() {
         staticClass:
           "col-md-4 product-box d-flex align-content-center justify-content-center flex-wrap big-text"
       },
-      [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.setComponent("products")
-              }
-            }
-          },
-          [
-            _vm._v(
-              "\n            Products (" +
-                _vm._s(_vm.productsCount) +
-                ")\n        "
-            )
-          ]
-        )
-      ]
+      [_c("button", [_vm._v("Products (" + _vm._s(_vm.productsCount) + ")")])]
     ),
     _vm._v(" "),
     _c(
@@ -42797,23 +42767,7 @@ var render = function() {
         staticClass:
           "col-md-4 product-box d-flex align-content-center justify-content-center flex-wrap big-text"
       },
-      [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.setComponent("users")
-              }
-            }
-          },
-          [
-            _vm._v(
-              "\n            Users (" + _vm._s(_vm.usersCount) + ")\n        "
-            )
-          ]
-        )
-      ]
+      [_c("button", [_vm._v("Users (" + _vm._s(_vm.usersCount) + ")")])]
     )
   ])
 }
@@ -42914,6 +42868,12 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _vm.orders && _vm.orders.length <= 0
+        ? _c("h1", { staticClass: "text-xl" }, [
+            _vm._v('\n        No orders to show yet :"[\n    ')
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.orders_pagination
         ? _c("pagination", {
             attrs: { data: this.orders_pagination, align: "center" },
@@ -42982,7 +42942,21 @@ var render = function() {
               ? _c("tr", { key: product.id }, [
                   _c("td", [_vm._v(_vm._s(++index))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.name))]),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "text-black hover:text-black hover:no-underline",
+                          attrs: { to: { path: "/products/" + product.id } }
+                        },
+                        [_vm._v(_vm._s(product.name))]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("td", [
                     _c("img", {
@@ -42995,13 +42969,67 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(product.price))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(product.discreption))])
+                  _c(
+                    "td",
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(product.discreption.slice(0, 40)) +
+                          "\n                    "
+                      ),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "text-black hover:text-black hover:underline",
+                          attrs: { to: { path: "/products/" + product.id } }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        ...\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("button", { staticClass: "btn btn-success mb-2 w-24" }, [
+                      _vm._v(
+                        "\n                        Edit\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger w-24",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteProduct(product.id, index)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Delete\n                    "
+                        )
+                      ]
+                    )
+                  ])
                 ])
               : _vm._e()
           }),
           0
         )
       ]),
+      _vm._v(" "),
+      _vm.products && _vm.products.length <= 0
+        ? _c("h1", { staticClass: "text-xl" }, [
+            _vm._v('\n        No products to show yet :"[\n    ')
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm.products_pagination
         ? _c("pagination", {
@@ -43030,7 +43058,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("td", [_vm._v("Price")]),
         _vm._v(" "),
-        _c("td", [_vm._v("Description")])
+        _c("td", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Edit/Delete")])
       ])
     ])
   }
@@ -43082,6 +43112,12 @@ var render = function() {
           0
         )
       ]),
+      _vm._v(" "),
+      _vm.users && _vm.users.length <= 0
+        ? _c("h1", { staticClass: "text-xl" }, [
+            _vm._v('\n        No users to show yet :"[\n    ')
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm.users_pagination
         ? _c("pagination", {

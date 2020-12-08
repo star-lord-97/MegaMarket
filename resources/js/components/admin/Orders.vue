@@ -44,6 +44,9 @@
                 </tr>
             </tbody>
         </table>
+        <h1 v-if="orders && orders.length <= 0" class="text-xl">
+            No orders to show yet :"[
+        </h1>
         <pagination
             v-if="orders_pagination"
             :data="this.orders_pagination"
@@ -60,7 +63,8 @@ export default {
     data() {
         return {
             orders: null,
-            orders_pagination: null
+            orders_pagination: null,
+            current_page: 0
         };
     },
 
@@ -75,13 +79,14 @@ export default {
                 .then(response => {
                     this.orders = response.data.data;
                     this.orders_pagination = response.data;
+                    this.current_page = page;
                 });
         },
 
         deliver(order_id, index) {
             axiosInstanceWithToken()
                 .patch(`/orders/${order_id}/deliver`)
-                .then((this.orders[--index].is_delivered = 1));
+                .then(this.getResults(this.current_page));
         }
     }
 };
