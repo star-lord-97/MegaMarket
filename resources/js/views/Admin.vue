@@ -20,6 +20,11 @@
                             </button>
                         </li>
                         <li>
+                            <button class="btn" @click="setComponent('users')">
+                                Users
+                            </button>
+                        </li>
+                        <li>
                             <button
                                 class="btn"
                                 @click="setComponent('products')"
@@ -28,8 +33,11 @@
                             </button>
                         </li>
                         <li>
-                            <button class="btn" @click="setComponent('users')">
-                                Users
+                            <button
+                                class="btn"
+                                @click="setComponent('addProduct')"
+                            >
+                                Add product
                             </button>
                         </li>
                     </ul>
@@ -46,6 +54,7 @@
 import Main from "../components/admin/Main";
 import Users from "../components/admin/Users";
 import Products from "../components/admin/Products";
+import AddProduct from "../components/admin/AddProduct";
 import Orders from "../components/admin/Orders";
 import User from "../apis/User";
 
@@ -54,6 +63,7 @@ export default {
         Main,
         Users,
         Products,
+        AddProduct,
         Orders
     },
 
@@ -103,6 +113,15 @@ export default {
                         .push({
                             name: "admin_pages",
                             params: { page: "products" }
+                        })
+                        .catch(() => {});
+                    break;
+                case "addProduct":
+                    this.activeComponent = AddProduct;
+                    this.$router
+                        .push({
+                            name: "admin_pages",
+                            params: { page: "addProduct" }
                         })
                         .catch(() => {});
                     break;
