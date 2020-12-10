@@ -2186,6 +2186,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2197,6 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
         discreption: "",
         image: ""
       },
+      imageURL: null,
       errors: []
     };
   },
@@ -2204,13 +2210,23 @@ __webpack_require__.r(__webpack_exports__);
     addProduct: function addProduct() {
       var _this = this;
 
-      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/products", this.newProduct).then(function (response) {
+      var newProductFormData = new FormData();
+      newProductFormData.append("name", this.newProduct.name);
+      newProductFormData.append("units", this.newProduct.units);
+      newProductFormData.append("discreption", this.newProduct.discreption);
+      newProductFormData.append("price", this.newProduct.price);
+      newProductFormData.append("image", this.newProduct.image);
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().post("/products", newProductFormData).then(function (response) {
         _this.$router.push("/")["catch"](function () {});
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this.errors = error.response.data.errors;
         }
       });
+    },
+    imageUploaded: function imageUploaded(event) {
+      this.newProduct.image = event.target.files[0];
+      this.imageURL = URL.createObjectURL(event.target.files[0]);
     }
   }
 });
@@ -3346,14 +3362,194 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _apis_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/User */ "./resources/js/apis/User.js");
+/* harmony import */ var _apis_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Api */ "./resources/js/apis/Api.js");
 //
 //
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["user_id"]
+  props: ["user_id"],
+  data: function data() {
+    return {
+      oldUser: {},
+      updatedUser: {
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
+      },
+      errors: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (response) {
+      _this.oldUser = response.data;
+      _this.updatedUser.name = response.data.name;
+      _this.updatedUser.email = response.data.email;
+    });
+  },
+  methods: {
+    updateUser: function updateUser() {
+      var _this2 = this;
+
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_1__["default"])().patch("users/".concat(this.oldUser.id), this.updatedUser).then(function (response) {
+        _this2.$router.push("/");
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors = error.response.data.errors;
+        }
+      });
+    },
+    deleteUser: function deleteUser() {
+      var _this3 = this;
+
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_1__["default"])()["delete"]("users/".concat(this.oldUser.id)).then(function (response) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("isAdmin");
+
+        _this3.$store.commit("LOGIN", false);
+
+        _this3.$store.commit("ADMIN", false);
+
+        _this3.$store.commit("AUTH_USER", null);
+
+        _this3.$router.push("/");
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -42737,6 +42933,40 @@ var render = function() {
             _c("div", { staticClass: "text-center" }, [
               _c(
                 "label",
+                { staticClass: "sr-only", attrs: { for: "productImage" } },
+                [_vm._v("Product Image")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "flex" }, [
+                _c("input", {
+                  staticClass:
+                    "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+                  attrs: {
+                    id: "productImage",
+                    name: "productImage",
+                    type: "file"
+                  },
+                  on: { change: _vm.imageUploaded }
+                }),
+                _vm._v(" "),
+                _vm.imageURL
+                  ? _c("img", {
+                      staticClass: "w-12",
+                      attrs: { src: this.imageURL, alt: "image" }
+                    })
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm.errors.productImage
+                ? _c("span", { staticClass: "text-red-700 font-bold" }, [
+                    _vm._v(_vm._s(_vm.errors.productImage[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "label",
                 { staticClass: "sr-only", attrs: { for: "productUnits" } },
                 [_vm._v("Product units")]
               ),
@@ -43375,7 +43605,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c("img", {
-                      staticClass: "rounded-full w-24",
+                      staticClass: "rounded-lg w-24",
                       attrs: { src: product.image, alt: product.name }
                     })
                   ]),
@@ -44325,9 +44555,296 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    " + _vm._s(_vm.user_id) + "\n")])
+  return _c(
+    "div",
+    { staticClass: "flex items-center justify-center bg-gray-50 py-12 px-4" },
+    [
+      _c("div", { staticClass: "max-w-md w-full space-y-8" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("form", { staticClass: "mt-8 space-y-6" }, [
+          _c("div", { staticClass: "rounded-md shadow-sm -space-y-px" }, [
+            _c("div", { staticClass: "text-center" }, [
+              _c("label", { staticClass: "sr-only", attrs: { for: "name" } }, [
+                _vm._v("Name")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.updatedUser.name,
+                    expression: "updatedUser.name"
+                  }
+                ],
+                staticClass:
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+                attrs: {
+                  id: "name",
+                  name: "name",
+                  type: "text",
+                  placeholder: "Name"
+                },
+                domProps: { value: _vm.updatedUser.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.updatedUser, "name", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.name
+                ? _c("span", { staticClass: "text-red-700 font-bold" }, [
+                    _vm._v(_vm._s(_vm.errors.name[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "label",
+                { staticClass: "sr-only", attrs: { for: "email-address" } },
+                [_vm._v("Email address")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.updatedUser.email,
+                    expression: "updatedUser.email"
+                  }
+                ],
+                staticClass:
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+                attrs: {
+                  id: "email-address",
+                  name: "email",
+                  type: "email",
+                  autocomplete: "email",
+                  placeholder: "Email address"
+                },
+                domProps: { value: _vm.updatedUser.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.updatedUser, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.email
+                ? _c("span", { staticClass: "text-red-700 font-bold" }, [
+                    _vm._v(_vm._s(_vm.errors.email[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("h1", { staticClass: "text-sm" }, [
+              _vm._v(
+                "\n                    If you want to change your password fill the password\n                    inputs, otherwise just ignore them :@\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "label",
+                { staticClass: "sr-only", attrs: { for: "password" } },
+                [_vm._v("Password")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.updatedUser.password,
+                    expression: "updatedUser.password"
+                  }
+                ],
+                staticClass:
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+                attrs: {
+                  id: "password",
+                  name: "password",
+                  type: "password",
+                  placeholder: "Password"
+                },
+                domProps: { value: _vm.updatedUser.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.updatedUser, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.password
+                ? _c("span", { staticClass: "text-red-700 font-bold" }, [
+                    _vm._v(_vm._s(_vm.errors.password[0]))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "sr-only",
+                  attrs: { for: "password_confirmation" }
+                },
+                [_vm._v("Password confirmation")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.updatedUser.password_confirmation,
+                    expression: "updatedUser.password_confirmation"
+                  }
+                ],
+                staticClass:
+                  "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+                attrs: {
+                  id: "password_confirmation",
+                  name: "password_confirmation",
+                  type: "password",
+                  placeholder: "Password confirmation"
+                },
+                domProps: { value: _vm.updatedUser.password_confirmation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.updatedUser,
+                      "password_confirmation",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.password
+                ? _c("span", { staticClass: "text-red-700 font-bold" }, [
+                    _vm._v(_vm._s(_vm.errors.password[0]))
+                  ])
+                : _vm._e()
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.updateUser()
+                  }
+                }
+              },
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "absolute left-0 inset-y-0 flex items-center pl-3"
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "h-5 w-5 text-indigo-500 group-hover:text-indigo-400",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20",
+                          fill: "currentColor",
+                          "aria-hidden": "true"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            d:
+                              "M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z",
+                            "clip-rule": "evenodd"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v("\n                    Update\n                ")
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "btn-danger w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.deleteUser()
+                  }
+                }
+              },
+              [_vm._v("\n                    Delete user\n                ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("img", {
+        staticClass: "mx-auto h-12 w-auto",
+        attrs: {
+          src: "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg",
+          alt: "Workflow"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "h2",
+        {
+          staticClass: "mt-6 text-center text-3xl font-extrabold text-gray-900"
+        },
+        [_vm._v("\n                Create a new account\n            ")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -62427,7 +62944,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
   state: {
     auth: {
       login: false,
-      user: {},
+      user: null,
       admin: false
     }
   },

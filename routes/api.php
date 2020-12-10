@@ -42,6 +42,12 @@ Route::middleware('auth:api')->group(function () {
     // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
     Route::get('/user', [UserController::class, 'show']);
 
+    // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
+    Route::patch('/users/{user:id}', [UserController::class, 'update']);
+
+    // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
+    Route::delete('/users/{user:id}', [UserController::class, 'destroy']);
+
     // return a specific user's orders (-----ADMIN----- || -----AUTHENTICATED USER-----)
     Route::get('/users/{user:id}/orders', UserOrdersController::class);
 

@@ -28,26 +28,31 @@
                             >{{ errors.productName[0] }}</span
                         >
                     </div>
-                    <!-- image -->
-                    <!-- <div class="text-center">
-                        <label for="email-address" class="sr-only"
-                            >Email address</label
+                    <div class="text-center">
+                        <label for="productImage" class="sr-only"
+                            >Product Image</label
                         >
-                        <input
-                            v-model="credentials.email"
-                            id="email-address"
-                            name="email"
-                            type="email"
-                            autocomplete="email"
-                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="Email address"
-                        />
+                        <div class="flex">
+                            <input
+                                id="productImage"
+                                name="productImage"
+                                type="file"
+                                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                @change="imageUploaded"
+                            />
+                            <img
+                                v-if="imageURL"
+                                :src="this.imageURL"
+                                alt="image"
+                                class="w-12"
+                            />
+                        </div>
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.email"
-                            >{{ errors.email[0] }}</span
+                            v-if="errors.productImage"
+                            >{{ errors.productImage[0] }}</span
                         >
-                    </div> -->
+                    </div>
                     <div class="text-center">
                         <label for="productUnits" class="sr-only"
                             >Product units</label
@@ -129,14 +134,26 @@ export default {
                 image: ""
             },
 
+            imageURL: null,
+
             errors: []
         };
     },
 
     methods: {
         addProduct() {
+            const newProductFormData = new FormData();
+            newProductFormData.append("name", this.newProduct.name);
+            newProductFormData.append("units", this.newProduct.units);
+            newProductFormData.append(
+                "discreption",
+                this.newProduct.discreption
+            );
+            newProductFormData.append("price", this.newProduct.price);
+            newProductFormData.append("image", this.newProduct.image);
+
             axiosInstanceWithToken()
-                .post("/products", this.newProduct)
+                .post("/products", newProductFormData)
                 .then(response => {
                     this.$router.push("/").catch(() => {});
                 })
@@ -145,6 +162,11 @@ export default {
                         this.errors = error.response.data.errors;
                     }
                 });
+        },
+
+        imageUploaded(event) {
+            this.newProduct.image = event.target.files[0];
+            this.imageURL = URL.createObjectURL(event.target.files[0]);
         }
     }
 };

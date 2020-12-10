@@ -10,7 +10,7 @@ export default new Vuex.Store({
     state: {
         auth: {
             login: false,
-            user: {},
+            user: null,
             admin: false
         }
     },

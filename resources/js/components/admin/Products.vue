@@ -30,7 +30,7 @@
                         <img
                             :src="product.image"
                             :alt="product.name"
-                            class="rounded-full w-24"
+                            class="rounded-lg w-24"
                         />
                     </td>
                     <td>{{ product.units }}</td>
