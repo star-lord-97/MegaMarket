@@ -12,15 +12,11 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function setImageAttribute($value)
+    public function getImageAttribute($value)
     {
-        $this->attributes['image'] = asset('/img/default-product.png');
+        return asset('storage/' . $value ?: 'storage/products/default-product.png');
     }
 
-    // public function getImageAttribute($value)
-    // {
-    //     return asset($value ?: '/img/default-product.png');
-    // }
 
     public function orders()
     {

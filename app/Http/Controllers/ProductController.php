@@ -25,12 +25,10 @@ class ProductController extends Controller
             'discreption' => 'required|string',
             'units' => 'required',
             'price' => 'required',
-            'image' => '',
+            'image' => 'file|required',
         ]);
 
-        // if ($request->image) {
-        //     $attributes['image'] = $request->avatar->store('products');
-        // }
+        $attributes['image'] = $request->image->store('products');
 
         Product::create($attributes);
     }
@@ -42,12 +40,7 @@ class ProductController extends Controller
             'discreption' => 'required|string',
             'units' => 'required',
             'price' => 'required',
-            'image' => '',
         ]);
-
-        // if ($request->image) {
-        //     $attributes['image'] = $request->avatar->store('products');
-        // }
 
         $product->update($attributes);
     }
