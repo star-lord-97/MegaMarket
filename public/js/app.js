@@ -43641,6 +43641,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "td",
+                    { staticClass: "grid grid-cols-1" },
                     [
                       _c(
                         "router-link",

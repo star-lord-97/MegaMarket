@@ -44,7 +44,7 @@
                             ...
                         </router-link>
                     </td>
-                    <td>
+                    <td class="grid grid-cols-1">
                         <router-link
                             :to="{
                                 path: '/edit_product?product_id=' + product.id
