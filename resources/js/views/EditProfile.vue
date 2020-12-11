@@ -50,12 +50,6 @@
                             >{{ errors.email[0] }}</span
                         >
                     </div>
-                    <br />
-                    <h1 class="text-sm">
-                        If you want to change your password fill the password
-                        inputs, otherwise just ignore them :@
-                    </h1>
-                    <br />
                     <div class="text-center">
                         <label for="password" class="sr-only">Password</label>
                         <input
