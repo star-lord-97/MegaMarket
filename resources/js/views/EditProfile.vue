@@ -10,7 +10,7 @@
                 <h2
                     class="mt-6 text-center text-3xl font-extrabold text-gray-900"
                 >
-                    Create a new account
+                    Update your profile
                 </h2>
             </div>
             <form class="mt-8 space-y-6">
