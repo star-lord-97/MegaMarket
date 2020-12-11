@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\DeliverOrderController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserOrdersController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +21,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// send a password reset link to a user's email 
+Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+
+// validate and reset a user's password 
+Route::post('/reset', [ResetPasswordController::class, 'reset']);
 
 // login a user and return an access token or an error message
 Route::post('/login', [LoginController::class, 'login']);

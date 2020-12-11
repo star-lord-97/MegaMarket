@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -25,6 +26,8 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users')->ignore($user)],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
+
+        $attributes['password'] = Hash::make($attributes['password']);
 
         $user->update($attributes);
     }

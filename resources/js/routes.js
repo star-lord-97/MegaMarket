@@ -3,6 +3,8 @@ import VueRouter from "vue-router";
 import Home from "./views/Home";
 import Product from "./views/Product";
 import Login from "./views/Login";
+import ForgotPassword from "./views/ForgotPassword";
+import ResetPassword from "./views/ResetPassword";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
 import Admin from "./views/Admin";
@@ -29,6 +31,22 @@ const routes = [
     {
         path: "/login",
         component: Login,
+        meta: { requiresGuest: true }
+    },
+
+    {
+        path: "/forgot_password",
+        component: ForgotPassword,
+        meta: { requiresGuest: true }
+    },
+
+    {
+        path: "/reset_password",
+        component: ResetPassword,
+        props: route => ({
+            token: route.query.token,
+            email: route.query.email
+        }),
         meta: { requiresGuest: true }
     },
 

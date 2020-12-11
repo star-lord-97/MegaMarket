@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="grid grid-cols-1">
                     <button
                         @click.prevent="login"
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -86,6 +86,12 @@
                         </span>
                         Sign in
                     </button>
+                    <router-link
+                        to="/forgot_password"
+                        class="group relative w-full flex justify-center py-2 px-4 text-sm font-medium rounded-md text-black"
+                    >
+                        Forgot your password?!
+                    </router-link>
                 </div>
             </form>
         </div>
