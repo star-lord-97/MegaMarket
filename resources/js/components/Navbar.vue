@@ -9,7 +9,7 @@
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                 />
                 <h1 class="px-5 font-bold text-xl text-indigo-400">
-                    BIGSTORE
+                    MEGAMARKET
                 </h1>
                 <router-link
                     to="/"

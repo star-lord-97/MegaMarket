@@ -24,7 +24,7 @@ class LoginController extends Controller
             ]);
         };
 
-        return $user->createToken('bigStore')->accessToken;
+        return $user->createToken('megaMarket')->accessToken;
     }
 
     public function logout(Request $request)
