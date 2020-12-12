@@ -2842,7 +2842,7 @@ __webpack_require__.r(__webpack_exports__);
     _apis_User__WEBPACK_IMPORTED_MODULE_5__["default"].auth().then(function (response) {
       _this.$store.commit("AUTH_USER", response.data);
 
-      if (localStorage.getItem("isAdmin") === "1") {
+      if (localStorage.getItem("isAdmin") === true) {
         _this.$store.commit("ADMIN", true);
       } else {
         _this.$store.commit("ADMIN", false);
@@ -3198,7 +3198,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (response) {
         _this.$store.commit("AUTH_USER", response.data);
 
-        if (localStorage.getItem("isAdmin") === "1") {
+        if (localStorage.getItem("isAdmin") === true) {
           _this.$store.commit("ADMIN", true);
         } else {
           _this.$store.commit("ADMIN", false);
@@ -3364,12 +3364,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apis_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/User */ "./resources/js/apis/User.js");
 /* harmony import */ var _apis_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Api */ "./resources/js/apis/Api.js");
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3853,7 +3847,7 @@ __webpack_require__.r(__webpack_exports__);
         _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (res) {
           localStorage.setItem("isAdmin", res.data.is_admin);
 
-          if (localStorage.getItem("isAdmin") === "1") {
+          if (localStorage.getItem("isAdmin") === true) {
             _this.$store.commit("ADMIN", true);
 
             _this.$router.push("/admin");
@@ -44861,16 +44855,6 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h1", { staticClass: "text-sm" }, [
-              _vm._v(
-                "\n                    If you want to change your password fill the password\n                    inputs, otherwise just ignore them :@\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
             _c("div", { staticClass: "text-center" }, [
               _c(
                 "label",
@@ -45054,7 +45038,7 @@ var staticRenderFns = [
         {
           staticClass: "mt-6 text-center text-3xl font-extrabold text-gray-900"
         },
-        [_vm._v("\n                Create a new account\n            ")]
+        [_vm._v("\n                Update your profile\n            ")]
       )
     ])
   }
@@ -63410,7 +63394,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-  if (localStorage.getItem("isAdmin") === "1") {
+  if (localStorage.getItem("isAdmin") === true) {
     return true;
   }
 
