@@ -3906,16 +3906,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -45514,7 +45504,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "text-muted" }, [
-            _vm._v(_vm._s(_vm.product.description))
+            _vm._v(_vm._s(_vm.product.discreption))
           ]),
           _vm._v(" "),
           _c("h4", [
