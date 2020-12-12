@@ -143,7 +143,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-    if (localStorage.getItem("isAdmin") === true) {
+    if (localStorage.getItem("isAdmin") === "true") {
         return true;
     }
 

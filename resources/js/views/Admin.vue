@@ -77,7 +77,7 @@ export default {
     mounted() {
         User.auth().then(response => {
             this.$store.commit("AUTH_USER", response.data);
-            if (localStorage.getItem("isAdmin") === true) {
+            if (localStorage.getItem("isAdmin") === "true") {
                 this.$store.commit("ADMIN", true);
             } else {
                 this.$store.commit("ADMIN", false);

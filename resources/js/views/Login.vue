@@ -120,7 +120,7 @@ export default {
                     localStorage.setItem("token", response.data);
                     User.auth().then(res => {
                         localStorage.setItem("isAdmin", res.data.is_admin);
-                        if (localStorage.getItem("isAdmin") === true) {
+                        if (localStorage.getItem("isAdmin") === "true") {
                             this.$store.commit("ADMIN", true);
                             this.$router.push("/admin");
                         } else {

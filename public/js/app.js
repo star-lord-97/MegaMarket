@@ -2842,7 +2842,7 @@ __webpack_require__.r(__webpack_exports__);
     _apis_User__WEBPACK_IMPORTED_MODULE_5__["default"].auth().then(function (response) {
       _this.$store.commit("AUTH_USER", response.data);
 
-      if (localStorage.getItem("isAdmin") === true) {
+      if (localStorage.getItem("isAdmin") === "true") {
         _this.$store.commit("ADMIN", true);
       } else {
         _this.$store.commit("ADMIN", false);
@@ -3198,7 +3198,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (response) {
         _this.$store.commit("AUTH_USER", response.data);
 
-        if (localStorage.getItem("isAdmin") === true) {
+        if (localStorage.getItem("isAdmin") === "true") {
           _this.$store.commit("ADMIN", true);
         } else {
           _this.$store.commit("ADMIN", false);
@@ -3847,7 +3847,7 @@ __webpack_require__.r(__webpack_exports__);
         _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (res) {
           localStorage.setItem("isAdmin", res.data.is_admin);
 
-          if (localStorage.getItem("isAdmin") === true) {
+          if (localStorage.getItem("isAdmin") === "true") {
             _this.$store.commit("ADMIN", true);
 
             _this.$router.push("/admin");
@@ -63394,7 +63394,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-  if (localStorage.getItem("isAdmin") === true) {
+  if (localStorage.getItem("isAdmin") === "true") {
     return true;
   }
 
