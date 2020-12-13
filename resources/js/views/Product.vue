@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axiosInstanceWithToken from "../apis/Api";
 
 export default {
     data() {
@@ -37,9 +37,11 @@ export default {
 
     mounted() {
         var productId = this.$route.params.id;
-        axios.get("/api/products/" + productId).then(response => {
-            this.product = response.data;
-        });
+        axiosInstanceWithToken
+            .get("/api/products/" + productId)
+            .then(response => {
+                this.product = response.data;
+            });
     }
 };
 </script>

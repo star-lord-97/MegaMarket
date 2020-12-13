@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axiosInstanceWithToken from "../apis/Api";
 
 export default {
     data() {
@@ -55,10 +55,12 @@ export default {
 
     methods: {
         getResults(page = 1) {
-            axios.get("/api/products?page=" + page).then(response => {
-                this.products = response.data.data;
-                this.products_pagination = response.data;
-            });
+            axiosInstanceWithToken
+                .get("/api/products?page=" + page)
+                .then(response => {
+                    this.products = response.data.data;
+                    this.products_pagination = response.data;
+                });
         }
     }
 };

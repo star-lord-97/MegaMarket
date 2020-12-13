@@ -3647,8 +3647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _apis_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Api */ "./resources/js/apis/Api.js");
 //
 //
 //
@@ -3705,7 +3704,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products?page=" + page).then(function (response) {
+      _apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/products?page=" + page).then(function (response) {
         _this.products = response.data.data;
         _this.products_pagination = response.data;
       });
@@ -3946,8 +3945,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _apis_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/Api */ "./resources/js/apis/Api.js");
 //
 //
 //
@@ -3986,7 +3984,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var productId = this.$route.params.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/" + productId).then(function (response) {
+    _apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/products/" + productId).then(function (response) {
       _this.product = response.data;
     });
   }
