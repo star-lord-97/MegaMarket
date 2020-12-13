@@ -55,7 +55,7 @@ export default {
 
     methods: {
         getResults(page = 1) {
-            axiosInstanceWithToken
+            axiosInstanceWithToken()
                 .get("/api/products?page=" + page)
                 .then(response => {
                     this.products = response.data.data;

@@ -37,7 +37,7 @@ export default {
 
     mounted() {
         var productId = this.$route.params.id;
-        axiosInstanceWithToken
+        axiosInstanceWithToken()
             .get("/api/products/" + productId)
             .then(response => {
                 this.product = response.data;

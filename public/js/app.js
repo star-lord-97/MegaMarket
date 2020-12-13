@@ -3704,7 +3704,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      _apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/products?page=" + page).then(function (response) {
+      Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get("/api/products?page=" + page).then(function (response) {
         _this.products = response.data.data;
         _this.products_pagination = response.data;
       });
@@ -3984,7 +3984,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var productId = this.$route.params.id;
-    _apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/products/" + productId).then(function (response) {
+    Object(_apis_Api__WEBPACK_IMPORTED_MODULE_0__["default"])().get("/api/products/" + productId).then(function (response) {
       _this.product = response.data;
     });
   }
