@@ -3986,7 +3986,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var productId = this.$route.params.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/products?page=" + productId).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/products/" + productId).then(function (response) {
       _this.product = response.data;
     });
   }
