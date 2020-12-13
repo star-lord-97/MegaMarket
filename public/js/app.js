@@ -45597,7 +45597,7 @@ var render = function() {
                   attrs: {
                     id: "facebook",
                     href:
-                      "http://https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
+                      "https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
                   }
                 },
                 [
@@ -45645,7 +45645,7 @@ var render = function() {
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black",
                   attrs: {
                     href:
-                      "http://https://megamarket0.herokuapp.com/api/auth/github/redirect"
+                      "https://megamarket0.herokuapp.com/api/auth/github/redirect"
                   }
                 },
                 [

@@ -89,7 +89,7 @@
                     <a
                         id="facebook"
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white"
-                        href="http://https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
+                        href="https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -112,7 +112,7 @@
                     </a>
                     <a
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black"
-                        href="http://https://megamarket0.herokuapp.com/api/auth/github/redirect"
+                        href="https://megamarket0.herokuapp.com/api/auth/github/redirect"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
