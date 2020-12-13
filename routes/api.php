@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserOrdersController;
 use Illuminate\Support\Facades\Route;
@@ -22,67 +23,78 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* socialite routes */
+// redirect route (from us to the provider)
+Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect']);
+// callback route (from the provider back to us)
+Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
+
+
+
+/* reset password routes */
 // send a password reset link to a user's email 
 Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-
 // validate and reset a user's password 
 Route::post('/reset', [ResetPasswordController::class, 'reset']);
 
+
+
+/* login/register routes */
 // login a user and return an access token or an error message
 Route::post('/login', [LoginController::class, 'login']);
-
 // submit a new user to the database and return 200 status code or an error message
 Route::post('/register', RegisterController::class);
 
+
+
+/* products routes */
 // return all the products in the database paginated by 10s
 Route::get('products', [ProductController::class, 'index']);
-
 // return a specific product's data
 Route::get('/products/{product:id}', [ProductController::class, 'show']);
 
 Route::middleware('auth:api')->group(function () {
+    /* logout route */
     // logout a user and return nothing
     Route::post('/logout', [LoginController::class, 'logout']);
 
+
+
+    /* users routes */
     // return all the users in the database paginated by 10s (-----ADMIN-----)
     Route::get('/users', [UserController::class, 'index']);
-
-    // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
+    // return the authenticated user's data after validating the personal access token (-----AUTHENTICATED USER-----)
     Route::get('/user', [UserController::class, 'show']);
-
-    // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
+    // update user's data (-----AUTHENTICATED USER-----)
     Route::patch('/users/{user:id}', [UserController::class, 'update']);
-
-    // return a specific user's data (-----ADMIN-----) || return user's data after validating the personal access token (-----AUTHENTICATED USER-----)
+    // delete a user (-----AUTHENTICATED USER-----)
     Route::delete('/users/{user:id}', [UserController::class, 'destroy']);
-
     // return a specific user's orders (-----ADMIN----- || -----AUTHENTICATED USER-----)
     Route::get('/users/{user:id}/orders', UserOrdersController::class);
 
+
+
+    /* products routes */
     // submit a new product row to the database and return 200 status code or an error message (-----ADMIN-----)
     Route::post('/products', [ProductController::class, 'store']);
-
     // update an existing product row on the database and return 200 status code or an error message (-----ADMIN-----)
     Route::patch('/products/{product:id}', [ProductController::class, 'update']);
-
     // destroy an existing product row and return 200 status code or an error message (-----ADMIN-----)
     Route::delete('/products/{product:id}', [ProductController::class, 'destroy']);
 
+
+
+    /* orders routes */
     // return all the orders in the database paginated by 10s (-----ADMIN-----)
     Route::get('orders', [OrderController::class, 'index']);
-
     // return a specific order (-----ADMIN----- || -----AUTHENTICATED USER-----)
     Route::get('/orders/{order:id}', [OrderController::class, 'show']);
-
     // submit a new order row to the database and return 200 status code or an error message (-----AUTHENTICATED USER-----)
     Route::post('/orders', [OrderController::class, 'store']);
-
     // update an existing order row on the database and return 200 status code or an error message (-----AUTHENTICATED USER-----)
     Route::patch('/orders/{order:id}', [OrderController::class, 'update']);
-
     // destroy an existing order row and return 200 status code or an error message (-----AUTHENTICATED USER-----)
     Route::delete('/orders/{order:id}', [OrderController::class, 'destroy']);
-
     // update an existing order row to mark it as delivered and return status code 200 or an error message (-----ADMIN-----)
     Route::patch('/orders/{order:id}/deliver', DeliverOrderController::class);
 });

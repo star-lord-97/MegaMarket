@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "./views/Home";
 import Product from "./views/Product";
 import Login from "./views/Login";
+import SocialLogin from "./views/SocialLogin";
 import ForgotPassword from "./views/ForgotPassword";
 import ResetPassword from "./views/ResetPassword";
 import Register from "./views/Register";
@@ -31,6 +32,15 @@ const routes = [
     {
         path: "/login",
         component: Login,
+        props: route => ({
+            code: route.query.code
+        }),
+        meta: { requiresGuest: true }
+    },
+
+    {
+        path: "/auth/:provider/callback",
+        component: SocialLogin,
         meta: { requiresGuest: true }
     },
 
