@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 /* socialite routes */
 // redirect route (from us to the provider)
-Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect']);
+Route::get('https://megamarket0.herokuapp.com/auth/{provider}/redirect', [SocialAuthController::class, 'redirect']);
 // callback route (from the provider back to us)
-Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
+Route::get('https://megamarket0.herokuapp.com/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
 
 
 
