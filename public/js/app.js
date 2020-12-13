@@ -2842,7 +2842,7 @@ __webpack_require__.r(__webpack_exports__);
     _apis_User__WEBPACK_IMPORTED_MODULE_5__["default"].auth().then(function (response) {
       _this.$store.commit("AUTH_USER", response.data);
 
-      if (localStorage.getItem("isAdmin") === "true") {
+      if (localStorage.getItem("isAdmin") === "1") {
         _this.$store.commit("ADMIN", true);
       } else {
         _this.$store.commit("ADMIN", false);
@@ -3198,7 +3198,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (response) {
         _this.$store.commit("AUTH_USER", response.data);
 
-        if (localStorage.getItem("isAdmin") === "true") {
+        if (localStorage.getItem("isAdmin") === "1") {
           _this.$store.commit("ADMIN", true);
         } else {
           _this.$store.commit("ADMIN", false);
@@ -3893,6 +3893,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3915,7 +3916,7 @@ __webpack_require__.r(__webpack_exports__);
         _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (res) {
           localStorage.setItem("isAdmin", res.data.is_admin);
 
-          if (localStorage.getItem("isAdmin") === "true") {
+          if (localStorage.getItem("isAdmin") === "1") {
             _this.$store.commit("ADMIN", true);
 
             _this.$router.push("/admin");
@@ -4300,17 +4301,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/auth/" + this.$route.params.provider + "/callback?code=" + this.$route.query.code).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://localhost:8000/api/auth/" + this.$route.params.provider + "/callback?code=" + this.$route.query.code).then(function (response) {
       _this.$store.commit("LOGIN", true);
 
       localStorage.setItem("token", response.data);
       _apis_User__WEBPACK_IMPORTED_MODULE_1__["default"].auth().then(function (res) {
         localStorage.setItem("isAdmin", res.data.is_admin);
 
-        if (localStorage.getItem("isAdmin") === "true") {
+        if (localStorage.getItem("isAdmin") === "1") {
           _this.$store.commit("ADMIN", true);
 
           _this.$router.push("/admin");
@@ -45596,8 +45600,7 @@ var render = function() {
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white",
                   attrs: {
                     id: "facebook",
-                    href:
-                      "https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
+                    href: "http://localhost:8000/api/auth/facebook/redirect"
                   }
                 },
                 [
@@ -45644,8 +45647,7 @@ var render = function() {
                   staticClass:
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black",
                   attrs: {
-                    href:
-                      "https://megamarket0.herokuapp.com/api/auth/github/redirect"
+                    href: "http://localhost:8000/api/auth/github/redirect"
                   }
                 },
                 [
@@ -45682,6 +45684,52 @@ var render = function() {
                   ),
                   _vm._v(
                     "\n                    Login with Github\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black",
+                  attrs: {
+                    href: "http://localhost:8000/api/auth/google/redirect"
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "absolute left-0 inset-y-0 flex items-center pl-3"
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "bi bi-google",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            width: "16",
+                            height: "16",
+                            fill: "currentColor",
+                            viewBox: "0 0 16 16"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d:
+                                "M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"
+                            }
+                          })
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(
+                    "\n                    Login with Google\n                "
                   )
                 ]
               ),
@@ -46295,24 +46343,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c(
+      "h2",
+      { staticClass: "mt-6 text-center text-3xl font-extrabold text-gray-900" },
+      [
+        _vm._v(
+          "\n        Logging with " +
+            _vm._s(this.$route.params.provider) +
+            ", please wait :^]\n    "
+        )
+      ]
+    )
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "h2",
-        {
-          staticClass: "mt-6 text-center text-3xl font-extrabold text-gray-900"
-        },
-        [_vm._v("\n        Logging with Github, please wait :^]\n    ")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -62918,7 +62963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var axiosInstance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "https://megamarket0.herokuapp.com/api"
+  baseURL: "http://localhost:8000/api"
 });
 
 function axiosInstanceWithToken() {
@@ -63699,7 +63744,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-  if (localStorage.getItem("isAdmin") === "true") {
+  if (localStorage.getItem("isAdmin") === "1") {
     return true;
   }
 
