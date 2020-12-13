@@ -1,7 +1,7 @@
 import axios from "axios";
 
 let axiosInstance = axios.create({
-    baseURL: "http://megamarket0.herokuapp.com/api"
+    baseURL: "https://megamarket0.herokuapp.com/api"
 });
 
 function axiosInstanceWithToken() {

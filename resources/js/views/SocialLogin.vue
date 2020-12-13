@@ -18,7 +18,7 @@ export default {
     mounted() {
         axios
             .get(
-                "http://megamarket0.herokuapp.com/api/auth/" +
+                "https://megamarket0.herokuapp.com/api/auth/" +
                     this.$route.params.provider +
                     "/callback?code=" +
                     this.$route.query.code
