@@ -18,7 +18,7 @@ export default {
     mounted() {
         axios
             .get(
-                "http://localhost:8000/api/auth/" +
+                "http://megamarket0.herokuapp.com/api/auth/" +
                     this.$route.params.provider +
                     "/callback?code=" +
                     this.$route.query.code
@@ -28,7 +28,7 @@ export default {
                 localStorage.setItem("token", response.data);
                 User.auth().then(res => {
                     localStorage.setItem("isAdmin", res.data.is_admin);
-                    if (localStorage.getItem("isAdmin") === "1") {
+                    if (localStorage.getItem("isAdmin") === "true") {
                         this.$store.commit("ADMIN", true);
                         this.$router.push("/admin");
                     } else {
