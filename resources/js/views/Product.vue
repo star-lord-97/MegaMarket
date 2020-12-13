@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import axiosInstanceWithToken from "../apis/Api";
+import axios from "axios";
 
 export default {
     data() {
@@ -37,8 +37,11 @@ export default {
 
     mounted() {
         var productId = this.$route.params.id;
-        axiosInstanceWithToken()
-            .get("/api/products/" + productId)
+        axios
+            .get(
+                "https://megamarket0.herokuapp.com/api/products?page=" +
+                    productId
+            )
             .then(response => {
                 this.product = response.data;
             });

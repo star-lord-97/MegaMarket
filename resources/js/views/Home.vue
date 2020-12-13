@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import axiosInstanceWithToken from "../apis/Api";
+import axios from "axios";
 
 export default {
     data() {
@@ -55,8 +55,11 @@ export default {
 
     methods: {
         getResults(page = 1) {
-            axiosInstanceWithToken()
-                .get("/api/products?page=" + page)
+            axios
+                .get(
+                    "https://megamarket0.herokuapp.com/api/products?page=" +
+                        page
+                )
                 .then(response => {
                     this.products = response.data.data;
                     this.products_pagination = response.data;
