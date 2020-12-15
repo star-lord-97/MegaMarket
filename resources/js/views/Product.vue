@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <img :src="product.image" :alt="product.name" />
+                <img src="/img/default-product.png" :alt="product.name" />
                 <h3 class="title">{{ product.name }}</h3>
                 <p class="text-muted">{{ product.discreption }}</p>
                 <h4>
@@ -38,7 +38,7 @@ export default {
     mounted() {
         var productId = this.$route.params.id;
         axios
-            .get("http://localhost:8000/api/products/" + productId)
+            .get("https://megamarket0.herokuapp.com/api/products/" + productId)
             .then(response => {
                 this.product = response.data;
             });

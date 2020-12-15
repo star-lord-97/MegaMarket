@@ -17,7 +17,7 @@
                     <router-link :to="{ path: '/products/' + product.id }">
                         <img
                             class="hover:grow hover:shadow-lg"
-                            :src="product.image"
+                            src="/img/default-product.png"
                             :alt="product.name"
                         />
                         <div class="pt-3 flex items-center justify-between">
@@ -56,7 +56,10 @@ export default {
     methods: {
         getResults(page = 1) {
             axios
-                .get("http://localhost:8000/api/products?page=" + page)
+                .get(
+                    "https://megamarket0.herokuapp.com/api/products?page=" +
+                        page
+                )
                 .then(response => {
                     this.products = response.data.data;
                     this.products_pagination = response.data;
