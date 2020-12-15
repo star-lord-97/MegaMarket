@@ -56,10 +56,7 @@ export default {
     methods: {
         getResults(page = 1) {
             axios
-                .get(
-                    "https://megamarket0.herokuapp.com/api/products?page=" +
-                        page
-                )
+                .get("http://localhost:8000/api/products?page=" + page)
                 .then(response => {
                     this.products = response.data.data;
                     this.products_pagination = response.data;

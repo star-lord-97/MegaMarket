@@ -38,7 +38,7 @@ export default {
     mounted() {
         var productId = this.$route.params.id;
         axios
-            .get("https://megamarket0.herokuapp.com/api/products/" + productId)
+            .get("http://localhost:8000/api/products/" + productId)
             .then(response => {
                 this.product = response.data;
             });

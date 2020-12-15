@@ -2842,7 +2842,7 @@ __webpack_require__.r(__webpack_exports__);
     _apis_User__WEBPACK_IMPORTED_MODULE_5__["default"].auth().then(function (response) {
       _this.$store.commit("AUTH_USER", response.data);
 
-      if (localStorage.getItem("isAdmin") === "true") {
+      if (localStorage.getItem("isAdmin") === "1") {
         _this.$store.commit("ADMIN", true);
       } else {
         _this.$store.commit("ADMIN", false);
@@ -3198,7 +3198,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (response) {
         _this.$store.commit("AUTH_USER", response.data);
 
-        if (localStorage.getItem("isAdmin") === "true") {
+        if (localStorage.getItem("isAdmin") === "1") {
           _this.$store.commit("ADMIN", true);
         } else {
           _this.$store.commit("ADMIN", false);
@@ -3705,7 +3705,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/products?page=" + page).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://localhost:8000/api/products?page=" + page).then(function (response) {
         _this.products = response.data.data;
         _this.products_pagination = response.data;
       });
@@ -3916,7 +3916,7 @@ __webpack_require__.r(__webpack_exports__);
         _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].auth().then(function (res) {
           localStorage.setItem("isAdmin", res.data.is_admin);
 
-          if (localStorage.getItem("isAdmin") === "true") {
+          if (localStorage.getItem("isAdmin") === "1") {
             _this.$store.commit("ADMIN", true);
 
             _this.$router.push("/admin");
@@ -3986,7 +3986,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var productId = this.$route.params.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/products/" + productId).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://localhost:8000/api/products/" + productId).then(function (response) {
       _this.product = response.data;
     });
   }
@@ -4307,14 +4307,14 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://megamarket0.herokuapp.com/api/auth/" + this.$route.params.provider + "/callback?code=" + this.$route.query.code).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://localhost:8000/api/auth/" + this.$route.params.provider + "/callback?code=" + this.$route.query.code).then(function (response) {
       _this.$store.commit("LOGIN", true);
 
       localStorage.setItem("token", response.data);
       _apis_User__WEBPACK_IMPORTED_MODULE_1__["default"].auth().then(function (res) {
         localStorage.setItem("isAdmin", res.data.is_admin);
 
-        if (localStorage.getItem("isAdmin") === "true") {
+        if (localStorage.getItem("isAdmin") === "1") {
           _this.$store.commit("ADMIN", true);
 
           _this.$router.push("/admin");
@@ -45600,8 +45600,7 @@ var render = function() {
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white",
                   attrs: {
                     id: "facebook",
-                    href:
-                      "https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
+                    href: "http://localhost:8000/api/auth/facebook/redirect"
                   }
                 },
                 [
@@ -45648,8 +45647,7 @@ var render = function() {
                   staticClass:
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black",
                   attrs: {
-                    href:
-                      "https://megamarket0.herokuapp.com/api/auth/github/redirect"
+                    href: "http://localhost:8000/api/auth/github/redirect"
                   }
                 },
                 [
@@ -45696,8 +45694,7 @@ var render = function() {
                   staticClass:
                     "group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black",
                   attrs: {
-                    href:
-                      "https://megamarket0.herokuapp.com/api/auth/google/redirect"
+                    href: "http://localhost:8000/api/auth/google/redirect"
                   }
                 },
                 [
@@ -62966,7 +62963,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var axiosInstance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "https://megamarket0.herokuapp.com/api"
+  baseURL: "http://localhost:8000/api"
 });
 
 function axiosInstanceWithToken() {
@@ -63747,7 +63744,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-  if (localStorage.getItem("isAdmin") === "true") {
+  if (localStorage.getItem("isAdmin") === "1") {
     return true;
   }
 
