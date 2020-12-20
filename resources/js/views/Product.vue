@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <img src="/img/default-product.png" :alt="product.name" />
+                <img :src="product.image" :alt="product.name" />
                 <h3 class="title">{{ product.name }}</h3>
                 <p class="text-muted">{{ product.discreption }}</p>
                 <h4>

@@ -17,7 +17,7 @@
                     <router-link :to="{ path: '/products/' + product.id }">
                         <img
                             class="hover:grow hover:shadow-lg"
-                            src="/img/default-product.png"
+                            :src="product.image"
                             :alt="product.name"
                         />
                         <div class="pt-3 flex items-center justify-between">

@@ -28,7 +28,7 @@
                     </td>
                     <td>
                         <img
-                            src="/img/default-product.png"
+                            :src="product.image"
                             :alt="product.name"
                             class="rounded-lg w-24"
                         />
