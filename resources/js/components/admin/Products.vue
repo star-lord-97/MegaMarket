@@ -28,7 +28,14 @@
                     </td>
                     <td>
                         <img
+                            v-if="appENV == 'local'"
                             :src="product.image"
+                            :alt="product.name"
+                            class="rounded-lg w-24"
+                        />
+                        <img
+                            v-else-if="appENV == 'production'"
+                            src="/img/default-product.png"
                             :alt="product.name"
                             class="rounded-lg w-24"
                         />
@@ -81,6 +88,7 @@ import axiosInstanceWithToken from "../../apis/Api";
 export default {
     data() {
         return {
+            appENV: process.env.MIX_APP_ENV,
             products: null,
             products_pagination: null,
             current_page: 0

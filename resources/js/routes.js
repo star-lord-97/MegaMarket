@@ -153,7 +153,7 @@ function isLoggedIn() {
 }
 
 function isAdmin() {
-    if (localStorage.getItem("isAdmin") === "1") {
+    if (localStorage.getItem("isAdmin") === process.env.MIX_DB_TRUE_OR_1) {
         return true;
     }
 

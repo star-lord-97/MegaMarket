@@ -89,7 +89,7 @@
                     <a
                         id="facebook"
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white"
-                        href="http://localhost:8000/api/auth/facebook/redirect"
+                        :href="appURL + '/api/auth/facebook/redirect'"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -112,7 +112,7 @@
                     </a>
                     <a
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black"
-                        href="http://localhost:8000/api/auth/github/redirect"
+                        :href="appURL + '/api/auth/github/redirect'"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -135,7 +135,7 @@
                     </a>
                     <a
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black"
-                        href="http://localhost:8000/api/auth/google/redirect"
+                        :href="appURL + '/api/auth/google/redirect'"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -173,6 +173,7 @@ import User from "../apis/User";
 export default {
     data() {
         return {
+            appURL: process.env.MIX_APP_URL,
             credentials: {
                 email: "",
                 password: ""
@@ -189,7 +190,10 @@ export default {
                     localStorage.setItem("token", response.data);
                     User.auth().then(res => {
                         localStorage.setItem("isAdmin", res.data.is_admin);
-                        if (localStorage.getItem("isAdmin") === "1") {
+                        if (
+                            localStorage.getItem("isAdmin") ===
+                            process.env.MIX_DB_TRUE_OR_1
+                        ) {
                             this.$store.commit("ADMIN", true);
                             this.$router.push("/admin");
                         } else {

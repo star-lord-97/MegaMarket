@@ -26,6 +26,7 @@
     "dependencies": {
         "autoprefixer": "^9.8.6",
         "bootstrap-vue": "^2.20.1",
+        "dotenv": "^8.2.0",
         "laravel-mix-purgecss": "^5.0.0",
         "laravel-vue-pagination": "^2.3.1",
         "postcss": "^7.0.35",

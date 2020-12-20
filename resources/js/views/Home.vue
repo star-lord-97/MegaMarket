@@ -16,9 +16,16 @@
                 >
                     <router-link :to="{ path: '/products/' + product.id }">
                         <img
-                            class="hover:grow hover:shadow-lg"
+                            v-if="appENV == 'local'"
                             :src="product.image"
                             :alt="product.name"
+                            class="hover:grow hover:shadow-lg"
+                        />
+                        <img
+                            v-else-if="appENV == 'production'"
+                            src="/img/default-product.png"
+                            :alt="product.name"
+                            class="hover:grow hover:shadow-lg"
                         />
                         <div class="pt-3 flex items-center justify-between">
                             <p class="">{{ product.name }}</p>
@@ -44,6 +51,7 @@ import axios from "axios";
 export default {
     data() {
         return {
+            appENV: process.env.MIX_APP_ENV,
             products: [],
             products_pagination: {}
         };
@@ -56,7 +64,7 @@ export default {
     methods: {
         getResults(page = 1) {
             axios
-                .get("http://localhost:8000/api/products?page=" + page)
+                .get(process.env.MIX_APP_URL + "/api/products?page=" + page)
                 .then(response => {
                     this.products = response.data.data;
                     this.products_pagination = response.data;
