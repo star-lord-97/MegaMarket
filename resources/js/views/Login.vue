@@ -89,7 +89,7 @@
                     <a
                         id="facebook"
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white"
-                        href="https://megamarket0.herokuapp.com/api/auth/facebook/redirect"
+                        href="http://localhost:8000/api/auth/facebook/redirect"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -112,7 +112,7 @@
                     </a>
                     <a
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black"
-                        href="https://megamarket0.herokuapp.com/api/auth/github/redirect"
+                        href="http://localhost:8000/api/auth/github/redirect"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -135,7 +135,7 @@
                     </a>
                     <a
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:no-underline hover:text-black"
-                        href="https://megamarket0.herokuapp.com/api/auth/google/redirect"
+                        href="http://localhost:8000/api/auth/google/redirect"
                     >
                         <span
                             class="absolute left-0 inset-y-0 flex items-center pl-3"
@@ -189,7 +189,7 @@ export default {
                     localStorage.setItem("token", response.data);
                     User.auth().then(res => {
                         localStorage.setItem("isAdmin", res.data.is_admin);
-                        if (localStorage.getItem("isAdmin") === "true") {
+                        if (localStorage.getItem("isAdmin") === "1") {
                             this.$store.commit("ADMIN", true);
                             this.$router.push("/admin");
                         } else {
