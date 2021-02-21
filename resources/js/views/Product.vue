@@ -2,9 +2,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2" v-if="state.product">
+                <!-- :src="state.product.main_image[0].image_path" -->
                 <img
-                    v-if="state.product.main_image"
-                    :src="state.product.main_image[0].image_path"
+                    src="\img\default-product.png"
                     :alt="state.product.name"
                     class="w-2/5"
                 />

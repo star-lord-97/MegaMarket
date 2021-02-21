@@ -12,8 +12,9 @@
                 :key="product.id"
             >
                 <router-link :to="{ path: '/product/' + product.id }">
+                    <!-- :src="product.main_image[0].image_path" -->
                     <img
-                        :src="product.main_image[0].image_path"
+                        src="\img\default-product.png"
                         :alt="product.name"
                         class="hover:grow hover:shadow-lg"
                     />
