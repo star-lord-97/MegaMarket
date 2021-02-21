@@ -1,15 +1,12 @@
 <?php
 
-use App\Http\Controllers\DeliverOrderController;
-use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserOrdersController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,22 +19,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-/* socialite routes */
-// redirect route (from us to the provider)
-Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect']);
-// callback route (from the provider back to us)
-Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback']);
-
-
-
-/* reset password routes */
-// send a password reset link to a user's email 
-Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-// validate and reset a user's password 
-Route::post('/reset', [ResetPasswordController::class, 'reset']);
-
-
 
 /* login/register routes */
 // login a user and return an access token or an error message
@@ -53,6 +34,15 @@ Route::get('products', [ProductController::class, 'index']);
 // return a specific product's data
 Route::get('/products/{product:id}', [ProductController::class, 'show']);
 
+
+
+// return a specific category's products
+Route::get('/categories', [CategoryController::class, 'index']);
+// return a specific category's products
+Route::get('/categories/{category}', [CategoryController::class, 'show']);
+
+
+
 Route::middleware('auth:api')->group(function () {
     /* logout route */
     // logout a user and return nothing
@@ -60,41 +50,26 @@ Route::middleware('auth:api')->group(function () {
 
 
 
-    /* users routes */
-    // return all the users in the database paginated by 10s (-----ADMIN-----)
-    Route::get('/users', [UserController::class, 'index']);
     // return the authenticated user's data after validating the personal access token (-----AUTHENTICATED USER-----)
     Route::get('/user', [UserController::class, 'show']);
-    // update user's data (-----AUTHENTICATED USER-----)
-    Route::patch('/users/{user:id}', [UserController::class, 'update']);
-    // delete a user (-----AUTHENTICATED USER-----)
-    Route::delete('/users/{user:id}', [UserController::class, 'destroy']);
-    // return a specific user's orders (-----ADMIN----- || -----AUTHENTICATED USER-----)
-    Route::get('/users/{user:id}/orders', UserOrdersController::class);
 
 
 
-    /* products routes */
-    // submit a new product row to the database and return 200 status code or an error message (-----ADMIN-----)
-    Route::post('/products', [ProductController::class, 'store']);
-    // update an existing product row on the database and return 200 status code or an error message (-----ADMIN-----)
-    Route::patch('/products/{product:id}', [ProductController::class, 'update']);
-    // destroy an existing product row and return 200 status code or an error message (-----ADMIN-----)
-    Route::delete('/products/{product:id}', [ProductController::class, 'destroy']);
+    /* cart routes */
+    // return a user's cart
+    Route::get('/cart', [CartController::class, 'show']);
+    // add to a user's cart
+    Route::post('/cart', [CartController::class, 'store']);
+    // remove from a user's cart
+    Route::delete('/cart/{cart:id}', [CartController::class, 'destroy']);
 
 
 
-    /* orders routes */
-    // return all the orders in the database paginated by 10s (-----ADMIN-----)
-    Route::get('orders', [OrderController::class, 'index']);
-    // return a specific order (-----ADMIN----- || -----AUTHENTICATED USER-----)
-    Route::get('/orders/{order:id}', [OrderController::class, 'show']);
-    // submit a new order row to the database and return 200 status code or an error message (-----AUTHENTICATED USER-----)
-    Route::post('/orders', [OrderController::class, 'store']);
-    // update an existing order row on the database and return 200 status code or an error message (-----AUTHENTICATED USER-----)
-    Route::patch('/orders/{order:id}', [OrderController::class, 'update']);
-    // destroy an existing order row and return 200 status code or an error message (-----AUTHENTICATED USER-----)
-    Route::delete('/orders/{order:id}', [OrderController::class, 'destroy']);
-    // update an existing order row to mark it as delivered and return status code 200 or an error message (-----ADMIN-----)
-    Route::patch('/orders/{order:id}/deliver', DeliverOrderController::class);
+    /* wishlist routes */
+    // return a user's wishlist
+    Route::get('/wishlist', [WishlistController::class, 'show']);
+    // add to a user's wishlist
+    Route::post('/wishlist', [WishlistController::class, 'store']);
+    // remove from a user's cart
+    Route::delete('/wishlist/{wishlist:id}', [WishlistController::class, 'destroy']);
 });

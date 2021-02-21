@@ -5,18 +5,6 @@
         >
             Store
         </h2>
-        <h2 class="inline">Categories:</h2>
-        <router-link class="mx-10" to="/">New</router-link>
-        <router-link class="mx-10" :to="'/category/sale'">On Sale</router-link>
-        <div
-            class="inline mx-10"
-            v-for="category in state.categories"
-            :key="category"
-        >
-            <router-link :to="'/category/' + category">{{
-                category
-            }}</router-link>
-        </div>
         <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
             <div
                 class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col"
@@ -33,17 +21,6 @@
                         <p class="">{{ product.name }}</p>
                     </div>
                 </router-link>
-                <router-link :to="'/category/' + product.category">
-                    <p class="pt-1 text-gray-500 font-bold">
-                        {{ product.category }}
-                    </p>
-                </router-link>
-                <p
-                    class="pt-1 text-gray-900 font-bold"
-                    v-if="product.sale === 1"
-                >
-                    On Sale
-                </p>
                 <p class="pt-1 text-gray-900 font-bold">
                     $ {{ product.price }}
                 </p>
@@ -55,22 +32,22 @@
 <script>
 import { onMounted, reactive } from "vue";
 import store from "../store";
+import { useRoute } from "vue-router";
 
 export default {
     setup() {
+        const route = useRoute();
+
         const state = reactive({
             products: [],
-            categories: [],
         });
 
         onMounted(() => {
-            store.dispatch("getAllProducts").then((response) => {
-                state.products = response.data;
-            });
-
-            store.dispatch("getAllCategories").then((response) => {
-                state.categories = response.data;
-            });
+            store
+                .dispatch("getOneCategory", { category: route.params.category })
+                .then((response) => {
+                    state.products = response.data;
+                });
         });
 
         return { state };

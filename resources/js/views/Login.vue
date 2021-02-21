@@ -20,7 +20,7 @@
                             >Email address</label
                         >
                         <input
-                            v-model="credentials.email"
+                            v-model="state.credentials.email"
                             id="email-address"
                             name="email"
                             type="email"
@@ -31,14 +31,14 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.email"
-                            >{{ errors.email[0] }}</span
+                            v-if="state.errors.email"
+                            >{{ state.errors.email[0] }}</span
                         >
                     </div>
                     <div class="text-center">
                         <label for="password" class="sr-only">Password</label>
                         <input
-                            v-model="credentials.password"
+                            v-model="state.credentials.password"
                             id="password"
                             name="password"
                             type="password"
@@ -49,15 +49,15 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.password"
-                            >{{ errors.password[0] }}</span
+                            v-if="state.errors.password"
+                            >{{ state.errors.password[0] }}</span
                         >
                     </div>
                     <div class="text-center">
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.credentials"
-                            >{{ errors.credentials[0] }}</span
+                            v-if="state.errors.credentials"
+                            >{{ state.errors.credentials[0] }}</span
                         >
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         </span>
                         Sign in
                     </button>
-                    <a
+                    <!-- <a
                         id="facebook"
                         class="group relative w-full flex justify-center my-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:no-underline hover:text-white"
                         :href="appURL + '/api/auth/facebook/redirect'"
@@ -160,7 +160,7 @@
                         class="group relative w-full flex justify-center py-2 my-1 px-4 text-sm font-medium rounded-md text-black"
                     >
                         Forgot your password?!
-                    </router-link>
+                    </router-link>-->
                 </div>
             </form>
         </div>
@@ -168,47 +168,38 @@
 </template>
 
 <script>
-import User from "../apis/User";
+import { reactive } from "vue";
+import store from "../store";
+import { useRouter } from "vue-router";
 
 export default {
-    data() {
-        return {
-            appURL: process.env.MIX_APP_URL,
+    setup() {
+        const router = useRouter();
+
+        const state = reactive({
             credentials: {
                 email: "",
-                password: ""
+                password: "",
             },
-            errors: []
-        };
-    },
+            errors: [],
+        });
 
-    methods: {
-        login() {
-            User.login(this.credentials)
-                .then(response => {
-                    this.$store.commit("LOGIN", true);
-                    localStorage.setItem("token", response.data);
-                    User.auth().then(res => {
-                        localStorage.setItem("isAdmin", res.data.is_admin);
-                        if (
-                            localStorage.getItem("isAdmin") ===
-                            process.env.MIX_DB_TRUE_OR_1
-                        ) {
-                            this.$store.commit("ADMIN", true);
-                            this.$router.push("/admin");
-                        } else {
-                            this.$store.commit("ADMIN", false);
-                            this.$router.push("/dashboard");
-                        }
-                    });
+        let login = () => {
+            store
+                .dispatch("login", { credentials: state.credentials })
+                .then((response) => {
+                    store.dispatch("isAdmin");
+                    router.push({ path: "/" });
                 })
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status === 422) {
-                        this.errors = error.response.data.errors;
+                        state.errors = error.response.data.errors;
                     }
                 });
-        }
-    }
+        };
+
+        return { state, login };
+    },
 };
 </script>
 

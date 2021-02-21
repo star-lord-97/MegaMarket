@@ -18,7 +18,7 @@
                     <div class="text-center">
                         <label for="name" class="sr-only">Name</label>
                         <input
-                            v-model="credentials.name"
+                            v-model="state.credentials.name"
                             id="name"
                             name="name"
                             type="text"
@@ -27,8 +27,8 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.name"
-                            >{{ errors.name[0] }}</span
+                            v-if="state.errors.name"
+                            >{{ state.errors.name[0] }}</span
                         >
                     </div>
                     <div class="text-center">
@@ -36,7 +36,7 @@
                             >Email address</label
                         >
                         <input
-                            v-model="credentials.email"
+                            v-model="state.credentials.email"
                             id="email-address"
                             name="email"
                             type="email"
@@ -46,14 +46,48 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.email"
-                            >{{ errors.email[0] }}</span
+                            v-if="state.errors.email"
+                            >{{ state.errors.email[0] }}</span
+                        >
+                    </div>
+                    <div class="text-center">
+                        <label for="phone-number" class="sr-only"
+                            >Phone number</label
+                        >
+                        <input
+                            v-model="state.credentials.phone"
+                            id="phone-number"
+                            name="phone"
+                            type="text"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Phone number"
+                        />
+                        <span
+                            class="text-red-700 font-bold"
+                            v-if="state.errors.phone"
+                            >{{ state.errors.phone[0] }}</span
+                        >
+                    </div>
+                    <div class="text-center">
+                        <label for="address" class="sr-only">Address</label>
+                        <input
+                            v-model="state.credentials.address"
+                            id="address"
+                            name="address"
+                            type="text"
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Address"
+                        />
+                        <span
+                            class="text-red-700 font-bold"
+                            v-if="state.errors.address"
+                            >{{ state.errors.address[0] }}</span
                         >
                     </div>
                     <div class="text-center">
                         <label for="password" class="sr-only">Password</label>
                         <input
-                            v-model="credentials.password"
+                            v-model="state.credentials.password"
                             id="password"
                             name="password"
                             type="password"
@@ -63,8 +97,8 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.password"
-                            >{{ errors.password[0] }}</span
+                            v-if="state.errors.password"
+                            >{{ state.errors.password[0] }}</span
                         >
                     </div>
                     <div class="text-center">
@@ -72,7 +106,7 @@
                             >Password confirmation</label
                         >
                         <input
-                            v-model="credentials.password_confirmation"
+                            v-model="state.credentials.password_confirmation"
                             id="password_confirmation"
                             name="password_confirmation"
                             type="password"
@@ -82,15 +116,15 @@
                         />
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.password"
-                            >{{ errors.password[0] }}</span
+                            v-if="state.errors.password"
+                            >{{ state.errors.password[0] }}</span
                         >
                     </div>
                     <div class="text-center">
                         <span
                             class="text-red-700 font-bold"
-                            v-if="errors.credentials"
-                            >{{ errors.credentials[0] }}</span
+                            v-if="state.errors.credentials"
+                            >{{ state.errors.credentials[0] }}</span
                         >
                     </div>
                 </div>
@@ -126,33 +160,41 @@
 </template>
 
 <script>
-import User from "../apis/User";
+import { reactive } from "vue";
+import store from "../store";
+import { useRouter } from "vue-router";
 
 export default {
-    data() {
-        return {
+    setup() {
+        const router = useRouter();
+
+        const state = reactive({
             credentials: {
                 name: "",
                 email: "",
+                phone: "",
+                address: "",
                 password: "",
-                password_confirmation: ""
+                password_confirmation: "",
             },
-            errors: []
-        };
-    },
 
-    methods: {
-        register() {
-            User.register(this.credentials)
-                .then(response => {
-                    this.$router.push("/login");
+            errors: [],
+        });
+
+        let register = () => {
+            store
+                .dispatch("register", { credentials: state.credentials })
+                .then((response) => {
+                    router.push({ path: "/login" });
                 })
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status === 422) {
-                        this.errors = error.response.data.errors;
+                        state.errors = error.response.data.errors;
                     }
                 });
-        }
-    }
+        };
+
+        return { state, register };
+    },
 };
 </script>

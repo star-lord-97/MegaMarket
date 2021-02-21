@@ -20,6 +20,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'phone' => ['required', 'string', 'min:11', 'max:11'],
+            'address' => ['required', 'string', 'max:256']
         ]);
 
         $attributes['password'] = Hash::make($attributes['password']);

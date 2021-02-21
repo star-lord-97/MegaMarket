@@ -4,22 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $guarded = [];
 
-    public function getImageAttribute($value)
+    public function mainImage()
     {
-        return asset('storage/' . $value ?: 'storage/products/default-product.png');
+        return $this->hasMany(ProductImage::class)->where("main", 1);
     }
 
-
-    public function orders()
+    public function images()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class);
     }
 }

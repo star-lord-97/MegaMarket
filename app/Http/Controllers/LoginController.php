@@ -24,7 +24,7 @@ class LoginController extends Controller
             ]);
         };
 
-        return $user->createToken('megaMarket')->accessToken;
+        return $user->createToken('fatto')->accessToken;
     }
 
     public function logout(Request $request)

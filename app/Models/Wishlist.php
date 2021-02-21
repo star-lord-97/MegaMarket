@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SocialAuth extends Model
+class Wishlist extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function user()
+    public function product()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Product::class)->with('mainImage');
     }
 }
